@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+
+metadata:
+  name: hotcold-deploy
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app: hotcold
+    managed-by: Helm
+    version: v1
+
+
+spec:
+  replicas: {{ .Values.replicaCount }}
+    
+  selector:
+    matchLabels:
+      app: hotcold
+    
+  template:
+    metadata:
+      labels:
+        app: hotcold
+    
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 8080

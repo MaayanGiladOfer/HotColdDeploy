@@ -1,0 +1,33 @@
+
+# specifies the number of replicas for our deployment
+replicaCount: 3
+
+# specifies the namespace name for our deployment
+namespace:
+  name: hotcold-ns
+
+# specifies the image hosted in our harbor registry and its version number tag
+image:
+  repository: registry-maayan.octopus.lab/hotcold/manofer/hotcold
+  tag: 0.1
+  # policty to only pull if image is not present on the system  
+  pullPolicy: IfNotPresent
+
+
+# specifies the service name, host port, and container port
+service:
+  name: hotcold-service
+  port: 80 # Host port
+  targetPort: 8080 # Container port
+
+
+# # Enables NGINX Ingress and defines routing for host and path
+ingress:
+  enabled: true
+  className: "nginx"
+  host: hotcold-maayan.octopus.lab
+  path: /
+  pathType: Prefix
+
+
+
